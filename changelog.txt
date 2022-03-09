@@ -1,3 +1,10 @@
+3/9/22 | v0.2.0
+- embedded media is no longer included in translated replies
+- added check to make sure translated Tweet is under 280 character limit
+- added check to ensure DeepL character limit is not surpassed
+- added 5 more accounts to the translate list (total of 10)
+- various small improvements
+
 3/7/22 | v0.1.0
 - activated script
 - created GitHub repo
