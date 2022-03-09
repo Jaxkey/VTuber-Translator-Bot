@@ -1,0 +1,4 @@
+3/7/22 | v0.1.0
+- activated script
+- created GitHub repo
+- released v0.1.0
