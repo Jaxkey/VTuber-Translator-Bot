@@ -32,7 +32,6 @@ def run_translation():
         current_tweet_index = 0
 
         print('Name: ' + handle + ' ID: ' + last_tweet)
-        # tweet_text, tweet_id = get_tweet(handle, current_tweet_index)
 
         # Find the first tweet that isn't a RT
         while True:
@@ -50,11 +49,25 @@ def run_translation():
             user_index += 1
             continue
 
+        # Remove links to any media in the Tweet
+        if "https://" in tweet_text:  # NOTE: This could potentially break if there is a standard link. I'll change this if it becomes an issue
+            tweet_text = tweet_text[:tweet_text.index("https://")]
+
         print(tweet_text)
+
+        # Check if enough characters remain to translate the Tweet
+        if check_remaining_characters(len(tweet_text)):
+            continue
 
         translated_text = translate_tweet(tweet_text)
 
-        api.update_status('@' + handle + ' ' + '[AI Translation 🤖]\n\n' + translated_text, in_reply_to_status_id=tweet_id)
+        # Make sure translated Tweet is under 280 character limit
+        if len(translated_text) > 280:
+            print("Tweet was too long (must be less than or equal to 280 characters, was " + translated_text)
+            user_index += 1
+            continue
+
+        # api.update_status('@' + handle + ' ' + '【AI Translation 🤖】\n\n' + translated_text, in_reply_to_status_id=tweet_id)
 
         # Update the file to store the new id
         update_last_seen(tweet_id, user_index)
@@ -73,7 +86,6 @@ def get_tweet(handle, index):
 ### Translate and return? the text ###
 def translate_tweet(tweet_text):
     translated = translator.translate_text(tweet_text, source_lang='JA', target_lang='EN-US')
-    print(translated)
     tr_string = str(translated)
     print(tr_string)
 
@@ -119,6 +131,17 @@ def update_last_seen(tweet_id, index):
         file.writelines(data)
 
     file.close()
+
+
+### Make sure there are enough characters remaining for translation ###
+def check_remaining_characters(tweet_len):
+    usage = translator.get_usage()
+
+    if tweet_len + usage.character.count > usage.character.limit:
+        print("Unable to translate. Out of characters.")
+        return True
+
+    return False
 
 
 while True:
