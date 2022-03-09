@@ -67,7 +67,7 @@ def run_translation():
             user_index += 1
             continue
 
-        # api.update_status('@' + handle + ' ' + '【AI Translation 🤖】\n\n' + translated_text, in_reply_to_status_id=tweet_id)
+        api.update_status('@' + handle + ' ' + '【AI Translation 🤖】\n\n' + translated_text, in_reply_to_status_id=tweet_id)
 
         # Update the file to store the new id
         update_last_seen(tweet_id, user_index)
