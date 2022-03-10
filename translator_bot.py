@@ -62,8 +62,10 @@ def run_translation():
         translated_text = translate_tweet(tweet_text)
 
         # Make sure translated Tweet is under 280 character limit
-        if len(translated_text) > 280:
-            print("Tweet was too long (must be less than or equal to 280 characters, was " + translated_text)
+        tweet_length = len(translated_text) + len('【AI Translation 🤖】') + 6
+        if tweet_length > 280:
+            print('Tweet was too long (must be less than or equal to 280 characters; Tweet was ' + str(tweet_length) + ')')
+            update_last_seen(tweet_id, user_index)
             user_index += 1
             continue
 
