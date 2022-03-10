@@ -1,3 +1,6 @@
+3/10/22 | v0.2.1
+- fixed issue where specific Tweet lengths would cause the bot to crash
+
 3/9/22 | v0.2.0
 - embedded media is no longer included in translated replies
 - added check to make sure translated Tweet is under 280 character limit
