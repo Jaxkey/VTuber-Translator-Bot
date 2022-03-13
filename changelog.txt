@@ -1,5 +1,5 @@
 3/12/22 | v1.0.0
-- Vtuber Translator Bot full release
+- VTuber Translator Bot full release
 - actually fixed issue where specific Tweet lengths would cause the bot to crash (lol)
 - added 15 more accounts to the translate list (total of 25)
 - new banner and pfp on the Twitter account (by @meebxx)
