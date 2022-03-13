@@ -62,7 +62,8 @@ def run_translation():
         translated_text = translate_tweet(tweet_text)
 
         # Make sure translated Tweet is under 280 character limit
-        tweet_length = len(translated_text) + len('【AI Translation 🤖】') + 6
+        tweet_length = count_characters(translated_text)
+        print(tweet_length)
         if tweet_length > 280:
             print('Tweet was too long (must be less than or equal to 280 characters; Tweet was ' + str(tweet_length) + ')')
             update_last_seen(tweet_id, user_index)
@@ -144,6 +145,19 @@ def check_remaining_characters(tweet_len):
         return True
 
     return False
+
+
+### Count the number of characters in a Tweet ###
+def count_characters(tweet):
+    numChars = 0
+    for char in tweet:
+        charASCII = ord(char)
+        if 32 <= charASCII <= 126 or charASCII == 10:   # ASCII 10 is newline
+            numChars += 1
+        else:
+            numChars += 2  # Emojis and other special characters count as 2 on Twitter
+
+    return numChars + len('【AI Translation 🤖】') + 5
 
 
 while True:
